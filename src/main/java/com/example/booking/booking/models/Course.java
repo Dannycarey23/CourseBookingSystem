@@ -1,6 +1,7 @@
 package com.example.booking.booking.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
@@ -21,8 +22,7 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
-    @JsonBackReference
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private List<Booking> bookings;
 
     public Course(String name, String town, double starRating) {
@@ -30,6 +30,10 @@ public class Course {
         this.town = town;
         this.starRating = starRating;
         this.bookings = new ArrayList<>();
+    }
+
+    public Course(){
+
     }
 
     public String getName() {

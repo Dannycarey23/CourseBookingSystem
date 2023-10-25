@@ -17,18 +17,23 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
-    @JsonBackReference
-    private List<Customer> customers;
-    @OneToMany
-    @JsonBackReference
-    private List<Course> courses;
+    @ManyToOne
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
 
-    public Booking(String date) {
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
+    public Booking(String date, Course course, Customer customer) {
 
         this.date = date;
-        this.customers = new ArrayList<>();
-        this.courses = new ArrayList<>();
+        this.customer = customer;
+        this.course = course;
+
+    }
+
+    public Booking(){
 
     }
 
@@ -48,19 +53,19 @@ public class Booking {
         this.id = id;
     }
 
-    public List<Customer> getCustomers() {
-        return customers;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

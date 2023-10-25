@@ -1,6 +1,8 @@
 package com.example.booking.booking.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -13,6 +15,9 @@ public class Customer {
     @Column(name = "ages")
     private int age;
 
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<Booking> bookings;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,6 +26,11 @@ public class Customer {
         this.name = name;
         this.town = town;
         this.age = age;
+        this.bookings = new ArrayList<>();
+    }
+
+    public Customer(){
+
     }
 
     public String getName() {
